@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
     bottom: 20,
-    width: "90%", // ✅ Теперь ширина фиксированная (например, 90% экрана)
+    width: "90%",
     marginHorizontal: "5%",
-    borderRadius: 25,
+    borderRadius: 40,
     backgroundColor: "#000",
     height: 75,
     paddingTop: 10,

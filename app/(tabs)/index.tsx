@@ -2,28 +2,22 @@ import { useHeaderStore } from "@/store/headerStore";
 import { useFocusEffect } from "@react-navigation/native"; // Вызывается каждый раз, когда экран становится активным
 import { useCallback } from "react";
 
-import {
-  View,
-  Image,
-  StyleSheet,
-  Platform,
-  Button,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, Button, ScrollView } from "react-native";
 
-import { HelloWave } from "@/components/HelloWave";
 import { ArrowRight } from "@/components/ui/ArrowRight";
 import SwiperComponent from "@/components/SwiperComponent";
 import EventSlider from "@/components/EventSlider";
 
 import { ThemedText } from "@/components/ThemedText";
 
+import { imageSlider } from "@/assets/data/eventData";
+
 export default function HomeScreen() {
   const setHeader = useHeaderStore((state) => state.setHeader);
 
   useFocusEffect(
     useCallback(() => {
-      setHeader("", false); // Обновляем заголовок при фокусе
+      setHeader("", false);
     }, [])
   );
   return (
@@ -40,9 +34,10 @@ export default function HomeScreen() {
           <ThemedText type="title">На повестке дня</ThemedText>
           <ArrowRight />
         </View>
-        <EventSlider />
+        <View style={styles.sliderWrapper}>
+          <EventSlider itemList={imageSlider} />
+        </View>
       </View>
-      <Button title="Я кнопка" />
     </ScrollView>
   );
 }
@@ -52,10 +47,14 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: "column",
-    gap: 50, // 👈 Добавляет отступ снизу, вместо `gap`
+    gap: 50,
   },
   blockContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
+  },
+  sliderWrapper: {
+    marginHorizontal: -48, // убираем отступ из blockContainer
+    marginTop: 16, // отступ между заголовком и слайдером
   },
   titleContainer: {
     flexDirection: "row",
