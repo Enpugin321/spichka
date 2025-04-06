@@ -3,11 +3,21 @@ import { create } from "zustand";
 interface HeaderState {
   title: string;
   showBack: boolean;
-  setHeader: (title: string, showBack: boolean) => void;
+  showAvatar?: boolean;
+  showProfileBar?: boolean;
+  setHeader: (
+    title: string,
+    showBack: boolean,
+    showAvatar: boolean,
+    showProfileBar: boolean
+  ) => void;
 }
 
 export const useHeaderStore = create<HeaderState>((set) => ({
   title: "Home",
   showBack: false,
-  setHeader: (title, showBack) => set({ title, showBack }),
+  showAvatar: true,
+  showProfileBar: false,
+  setHeader: (title, showBack, showAvatar, showProfileBar) =>
+    set({ title, showBack, showAvatar, showProfileBar }),
 }));

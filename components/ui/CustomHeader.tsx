@@ -8,9 +8,13 @@ import {
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useHeaderStore } from "@/store/headerStore";
+import { useUserStore } from "@/store/userInformationStore";
+
+import ProfileBar from "./ProfileBar";
 
 export default function CustomHeader() {
-  const { title, showBack } = useHeaderStore();
+  const { title, showBack, showAvatar, showProfileBar } = useHeaderStore();
+  const { id } = useUserStore();
   const router = useRouter();
   const statusBarHeight =
     Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0;
@@ -35,11 +39,15 @@ export default function CustomHeader() {
         <View style={{ width: 24 }} /> // Пустой блок для выравнивания
       )}
 
-      <Text style={{ fontSize: 18, fontWeight: "bold" }}>{title}</Text>
+      {showProfileBar ? <ProfileBar /> : <View style={{ width: 24 }} />}
 
-      <TouchableOpacity onPress={() => router.push("/profile/3")}>
-        <Ionicons name="person-circle" size={48} color="black" />
-      </TouchableOpacity>
+      {showAvatar ? (
+        <TouchableOpacity onPress={() => router.push(`/profile/${id}`)}>
+          <Ionicons name="person-circle" size={48} color="black" />
+        </TouchableOpacity>
+      ) : (
+        <View style={{ width: 24 }} />
+      )}
     </View>
   );
 }

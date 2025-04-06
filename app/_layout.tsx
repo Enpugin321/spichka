@@ -35,12 +35,12 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <CustomHeader />
       <Stack
         screenOptions={{
-          header: () => <CustomHeader />, // ✅ Указываем кастомный header
+          headerShown: false,
         }}
       >
-        {/* 📌 Вместо "app/(tabs)" загружаем корневой TabLayout */}
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="+not-found" />
       </Stack>

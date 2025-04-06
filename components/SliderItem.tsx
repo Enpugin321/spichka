@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     width: ITEM_WIDTH,
-    paddingVertical: 20,
     marginHorizontal: 20,
   },
   imageWrapper: {

@@ -11,13 +11,15 @@ import EventSlider from "@/components/EventSlider";
 import { ThemedText } from "@/components/ThemedText";
 
 import { imageSlider } from "@/assets/data/eventData";
+import { collectionData } from "@/assets/data/collectionData";
+import CollectionComponent from "@/components/CollectionComponent";
 
 export default function HomeScreen() {
   const setHeader = useHeaderStore((state) => state.setHeader);
 
   useFocusEffect(
     useCallback(() => {
-      setHeader("", false);
+      setHeader("", false, true, false);
     }, [])
   );
   return (
@@ -38,6 +40,14 @@ export default function HomeScreen() {
           <EventSlider itemList={imageSlider} />
         </View>
       </View>
+
+      <View style={styles.blockContainer}>
+        <View style={styles.titleContainer}>
+          <ThemedText type="title">Подборки редакции</ThemedText>
+          <ArrowRight />
+        </View>
+        <CollectionComponent itemList={collectionData} />
+      </View>
     </ScrollView>
   );
 }
@@ -54,12 +64,12 @@ const styles = StyleSheet.create({
   },
   sliderWrapper: {
     marginHorizontal: -48, // убираем отступ из blockContainer
-    marginTop: 16, // отступ между заголовком и слайдером
   },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+    marginBottom: 15,
   },
   stepContainer: {
     gap: 8,
