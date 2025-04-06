@@ -1,7 +1,15 @@
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { EventSliderType } from "@/assets/data/eventData";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -19,6 +27,7 @@ const { width } = Dimensions.get("screen");
 const ITEM_WIDTH = width * 0.75;
 
 const SliderItem = ({ item, index, scrollX }: Props) => {
+  const router = useRouter();
   const rnAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -38,21 +47,34 @@ const SliderItem = ({ item, index, scrollX }: Props) => {
     };
   });
 
-  return (
-    <Animated.View style={[styles.itemContainer, rnAnimatedStyle]}>
-      <View style={styles.imageWrapper}>
-        <Image source={item.image} style={styles.image} />
-        <LinearGradient
-          colors={["transparent", "rgba(0, 0, 0, 0.8)"]}
-          style={styles.gradient}
-        />
-      </View>
+  const handlePress = () => {
+    router.push({
+      pathname: "/event/[id]",
+      params: {
+        id: item.id,
+        title: item.title,
+        description: item.description,
+      },
+    });
+  };
 
-      <View style={styles.textWrapper}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-      </View>
-    </Animated.View>
+  return (
+    <TouchableOpacity activeOpacity={0.8} onPress={handlePress}>
+      <Animated.View style={[styles.itemContainer, rnAnimatedStyle]}>
+        <View style={styles.imageWrapper}>
+          <Image source={item.image} style={styles.image} />
+          <LinearGradient
+            colors={["transparent", "rgba(0, 0, 0, 0.8)"]}
+            style={styles.gradient}
+          />
+        </View>
+
+        <View style={styles.textWrapper}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.description}>{item.description}</Text>
+        </View>
+      </Animated.View>
+    </TouchableOpacity>
   );
 };
 

@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     position: "relative",
     borderRadius: 20,
-    backgroundColor: "#f0f0f0",
     overflow: "hidden",
   },
   button: {
