@@ -1,13 +1,11 @@
-import LikeSVG from "@/assets/images/likeSVG";
-import SavedPNG from "@/assets/images/savedSVG";
-import ShareSVG from "@/assets/images/shareSVG";
+import { LikeSVG, SavedPNG, ShareSVG, ArrowSVG } from "@/assets/images/icons";
 // @ts-ignore
 import headerBackground from "@/assets/images/placeholder.png";
 // @ts-ignore
 import Shop from "@/assets/images/sliderImages/4.jpg";
 // @ts-ignore
 import Avatar from "@/assets/images/avatar.png";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback } from "react";
 import {
   ImageBackground,
   View,
@@ -20,13 +18,11 @@ import {
   StatusBar,
   Platform,
 } from "react-native";
-import CategorySVG from "@/assets/images/categorySVG";
+import CategorySVG from "@/assets/images/icons/categorySVG";
 import ExpandableText from "@/components/ExpandableText";
 import EventSlider from "@/components/EventSlider";
 import { imageSlider } from "@/assets/data/eventData";
-import { useSearchParams } from "expo-router/build/hooks";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
-import ArrowSVG from "@/assets/images/arrowSVG";
 import { useHeaderStore } from "@/store/headerStore";
 
 interface Props {
@@ -106,10 +102,8 @@ const Author = ({ name, isSubscribed = false, image, type }: Props) => {
 
 const Event = () => {
   const { id } = useLocalSearchParams();
-  const previous = useSearchParams().get("previous");
+  const event = imageSlider.find((item) => item.id === Number(id));
   const router = useRouter();
-  const pageStack = useRef<number[]>([]);
-  const previousPage = useRef<number>(-1);
 
   const setHeader = useHeaderStore((state) => state.setHeader);
 
@@ -126,27 +120,12 @@ const Event = () => {
     }, [])
   );
 
-  const event = imageSlider.find((item) => item.id === Number(id));
-
-  const scrollViewRef = useRef<ScrollView>(null);
-
-  const scrollToTop = () => {
-    // Прокручиваем ScrollView до верхней части
-    scrollViewRef.current?.scrollTo({ y: 0, animated: false });
-  };
-
-  useEffect(() => {
-    scrollToTop();
-    if (previous !== "true") pageStack.current.push(previousPage.current);
-    previousPage.current = Number(id);
-  }, [id]);
-
   const goBack = () => {
     router.back();
   };
 
   return (
-    <ScrollView style={style.container} ref={scrollViewRef}>
+    <ScrollView style={style.container}>
       <View style={style.header}>
         <ImageBackground
           source={headerBackground}

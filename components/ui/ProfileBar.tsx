@@ -82,7 +82,6 @@ export default function ProfileBar() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
-    marginTop: 16,
   },
   inner: {
     flexDirection: "row",

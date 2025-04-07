@@ -2,7 +2,7 @@ import { useHeaderStore } from "@/store/headerStore";
 import { useFocusEffect } from "@react-navigation/native"; // Вызывается каждый раз, когда экран становится активным
 import { useCallback } from "react";
 
-import { View, StyleSheet, Button, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 
 import { ArrowRight } from "@/components/ui/ArrowRight";
 import SwiperComponent from "@/components/SwiperComponent";
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: "column",
     gap: 50,
+    paddingBottom: 110,
   },
   blockContainer: {
     paddingHorizontal: 24,

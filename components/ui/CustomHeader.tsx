@@ -1,10 +1,5 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StatusBar,
-  Platform,
-} from "react-native";
+import { View, TouchableOpacity, StatusBar, Platform } from "react-native";
+import { ArrowSVG } from "@/assets/images/icons";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useHeaderStore } from "@/store/headerStore";
@@ -31,15 +26,25 @@ export default function CustomHeader() {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingTop: statusBarHeight + 10,
+        marginTop: statusBarHeight + 10,
         paddingBottom: 15,
         paddingHorizontal: 24,
         backgroundColor: transparent ? "transparent" : "#fff",
       }}
     >
       {showBack ? (
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="black" />
+        <TouchableOpacity
+          onPress={() => router.back()}
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 24,
+            backgroundColor: "rgba(0, 0, 0, 1)",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ArrowSVG />
         </TouchableOpacity>
       ) : (
         <View style={{ width: 24 }} /> // Пустой блок для выравнивания

@@ -20,7 +20,11 @@ const images = [
 const SwiperComponent = () => {
   return (
     <View style={styles.container}>
-      <Swiper dotColor="#ffffff" activeDotColor="red" showsPagination={true}>
+      <Swiper
+        dotColor="#ffffff"
+        activeDotColor="#7c7c7c"
+        showsPagination={true}
+      >
         {images?.map((image) => (
           <View key={image?.id} style={styles.slide}>
             <Image

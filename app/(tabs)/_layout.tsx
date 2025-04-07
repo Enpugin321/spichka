@@ -1,17 +1,22 @@
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
+import {
+  HomeSVG,
+  MagnifierSVG,
+  AddPersonSVG,
+  CompassSVG,
+} from "@/assets/images/icons";
 
 import { HapticTab } from "@/components/HapticTab";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
-import { Colors } from "@/constants/Colors";
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors["light"].tint,
+        tabBarActiveTintColor: "#FFFFFF",
+        tabBarInactiveTintColor: "#9E9E9E",
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
@@ -22,18 +27,28 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={24} name="house.fill" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <HomeSVG color={color} />,
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
           title: "Explore",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={24} name="paperplane.fill" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <MagnifierSVG color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="addPerson"
+        options={{
+          title: "AddPerson",
+          tabBarIcon: ({ color }) => <AddPersonSVG color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="compass"
+        options={{
+          title: "Compass",
+          tabBarIcon: ({ color }) => <CompassSVG color={color} />,
         }}
       />
     </Tabs>
