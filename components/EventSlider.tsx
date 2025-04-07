@@ -22,7 +22,7 @@ const EventSlider = ({ itemList }: Props) => {
   });
 
   return (
-    <View>
+    <View style={{ flexShrink: 1, marginHorizontal: -48 }}>
       <Animated.FlatList
         data={itemList}
         renderItem={({ item, index }) => (

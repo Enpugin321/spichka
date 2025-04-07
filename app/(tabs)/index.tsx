@@ -19,7 +19,11 @@ export default function HomeScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      setHeader("", false, true, false);
+      setHeader({
+        showBack: false,
+        showAvatar: true,
+        showProfileBar: false,
+      });
     }, [])
   );
   return (
@@ -36,7 +40,7 @@ export default function HomeScreen() {
           <ThemedText type="title">На повестке дня</ThemedText>
           <ArrowRight />
         </View>
-        <View style={styles.sliderWrapper}>
+        <View>
           <EventSlider itemList={imageSlider} />
         </View>
       </View>
@@ -61,9 +65,6 @@ const styles = StyleSheet.create({
   },
   blockContainer: {
     paddingHorizontal: 24,
-  },
-  sliderWrapper: {
-    marginHorizontal: -48, // убираем отступ из blockContainer
   },
   titleContainer: {
     flexDirection: "row",

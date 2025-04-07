@@ -71,7 +71,7 @@ const SliderItem = ({ item, index, scrollX }: Props) => {
 
         <View style={styles.textWrapper}>
           <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.description}>{item.description}</Text>
+          <Text style={styles.description}>{item.date}</Text>
         </View>
       </Animated.View>
     </TouchableOpacity>

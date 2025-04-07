@@ -1,23 +1,21 @@
 import { create } from "zustand";
 
 interface HeaderState {
-  title: string;
+  visible: boolean;
   showBack: boolean;
-  showAvatar?: boolean;
-  showProfileBar?: boolean;
-  setHeader: (
-    title: string,
-    showBack: boolean,
-    showAvatar: boolean,
-    showProfileBar: boolean
-  ) => void;
+  showAvatar: boolean;
+  showProfileBar: boolean;
+  transparent: boolean;
+  absolute: boolean;
+  setHeader: (config: Partial<HeaderState>) => void;
 }
 
 export const useHeaderStore = create<HeaderState>((set) => ({
-  title: "Home",
+  visible: true,
   showBack: false,
   showAvatar: true,
   showProfileBar: false,
-  setHeader: (title, showBack, showAvatar, showProfileBar) =>
-    set({ title, showBack, showAvatar, showProfileBar }),
+  transparent: false,
+  absolute: false,
+  setHeader: (config) => set((state) => ({ ...state, ...config })),
 }));

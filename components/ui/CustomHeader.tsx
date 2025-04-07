@@ -13,7 +13,8 @@ import { useUserStore } from "@/store/userInformationStore";
 import ProfileBar from "./ProfileBar";
 
 export default function CustomHeader() {
-  const { title, showBack, showAvatar, showProfileBar } = useHeaderStore();
+  const { showBack, showAvatar, showProfileBar, transparent, absolute } =
+    useHeaderStore();
   const { id } = useUserStore();
   const router = useRouter();
   const statusBarHeight =
@@ -22,13 +23,18 @@ export default function CustomHeader() {
   return (
     <View
       style={{
+        position: absolute ? "absolute" : "relative",
+        top: absolute ? 0 : undefined,
+        left: absolute ? 0 : undefined,
+        right: absolute ? 0 : undefined,
+        zIndex: absolute ? 1000 : undefined,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         paddingTop: statusBarHeight + 10,
         paddingBottom: 15,
         paddingHorizontal: 24,
-        backgroundColor: "#fff",
+        backgroundColor: transparent ? "transparent" : "#fff",
       }}
     >
       {showBack ? (

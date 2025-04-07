@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -14,7 +8,7 @@ import { usePathname, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/userInformationStore";
 
-const BUTTON_WIDTH = 100;
+const BUTTON_WIDTH = 120;
 const BUTTON_HEIGHT = 32;
 
 export default function ProfileBar() {

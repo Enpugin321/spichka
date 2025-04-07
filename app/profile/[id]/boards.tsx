@@ -1,5 +1,3 @@
-// app/profile/[id]/boards.tsx
-
 import { Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 

@@ -13,12 +13,14 @@ import "react-native-reanimated";
 import CustomHeader from "@/components/ui/CustomHeader";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { useHeaderStore } from "@/store/headerStore";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const { visible } = useHeaderStore();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -35,7 +37,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <CustomHeader />
+      {visible && <CustomHeader />}
       <Stack
         screenOptions={{
           headerShown: false,
