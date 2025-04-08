@@ -1,19 +1,16 @@
 import { View } from "react-native";
 import React from "react";
-
-import { CollectionType } from "@/assets/data/collectionData";
+import { CollectionOrEventType } from "@/constants/types";
 import CollectionItem from "@/components/CollectionItem";
 
 type Props = {
-  itemList: CollectionType[];
+  itemList: CollectionOrEventType[];
 };
 
 const CollectionComponent = ({ itemList }: Props) => {
-  const collections = itemList.slice(0, 4);
-
   return (
     <View style={{ gap: 15 }}>
-      {collections.map((item, index) => (
+      {itemList.map((item, index) => (
         <CollectionItem item={item} index={index} key={index} />
       ))}
     </View>

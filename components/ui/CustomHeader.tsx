@@ -1,19 +1,27 @@
-import { View, TouchableOpacity, StatusBar, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StatusBar,
+  Platform,
+  StyleSheet,
+} from "react-native";
 import { ArrowSVG } from "@/assets/images/icons";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useHeaderStore } from "@/store/headerStore";
 import { useUserStore } from "@/store/userInformationStore";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import ProfileBar from "./ProfileBar";
 
 export default function CustomHeader() {
-  const { showBack, showAvatar, showProfileBar, transparent, absolute } =
+  const { title, showBack, showAvatar, showProfileBar, transparent, absolute } =
     useHeaderStore();
   const { id } = useUserStore();
   const router = useRouter();
-  const statusBarHeight =
-    Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0;
+  const insets = useSafeAreaInsets();
+  const statusBarHeight = insets.top;
 
   return (
     <View
@@ -50,7 +58,13 @@ export default function CustomHeader() {
         <View style={{ width: 24 }} /> // Пустой блок для выравнивания
       )}
 
-      {showProfileBar ? <ProfileBar /> : <View style={{ width: 24 }} />}
+      {title.length > 0 ? (
+        <Text style={styles.title}>{title}</Text>
+      ) : showProfileBar ? (
+        <ProfileBar />
+      ) : (
+        <View style={{ width: 24 }} />
+      )}
 
       {showAvatar ? (
         <TouchableOpacity onPress={() => router.push(`/profile/${id}`)}>
@@ -62,3 +76,11 @@ export default function CustomHeader() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontWeight: "700",
+    fontSize: 20,
+    color: "#000",
+  },
+});

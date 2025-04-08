@@ -15,6 +15,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        tabBarShowLabel: false,
         tabBarActiveTintColor: "#FFFFFF",
         tabBarInactiveTintColor: "#9E9E9E",
         headerShown: false,
@@ -26,29 +27,37 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
           tabBarIcon: ({ color }) => <HomeSVG color={color} />,
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: "Explore",
           tabBarIcon: ({ color }) => <MagnifierSVG color={color} />,
         }}
       />
       <Tabs.Screen
         name="addPerson"
         options={{
-          title: "AddPerson",
           tabBarIcon: ({ color }) => <AddPersonSVG color={color} />,
         }}
       />
       <Tabs.Screen
         name="compass"
         options={{
-          title: "Compass",
           tabBarIcon: ({ color }) => <CompassSVG color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="events/index"
+        options={{
+          href: null, // исключает из табов
+        }}
+      />
+      <Tabs.Screen
+        name="collections/index"
+        options={{
+          href: null, // исключает из табов
         }}
       />
     </Tabs>
@@ -58,22 +67,16 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
+    paddingTop: 16,
     borderTopWidth: 0,
-    bottom: 20,
+    bottom: 18,
     width: "90%",
     marginHorizontal: "5%",
     borderRadius: 40,
     backgroundColor: "#000",
     height: 75,
-    paddingTop: 10,
     paddingHorizontal: 20,
     ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 5 },
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
-      },
       android: {
         elevation: 5,
       },

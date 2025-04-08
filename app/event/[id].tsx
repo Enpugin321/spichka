@@ -1,11 +1,10 @@
-import { LikeSVG, SavedPNG, ShareSVG, ArrowSVG } from "@/assets/images/icons";
-// @ts-ignore
-import headerBackground from "@/assets/images/placeholder.png";
-// @ts-ignore
-import Shop from "@/assets/images/sliderImages/4.jpg";
-// @ts-ignore
-import Avatar from "@/assets/images/avatar.png";
-import React, { useCallback } from "react";
+import {
+  LikeSVG,
+  SavedPNG,
+  ShareSVG,
+  ArrowSVG,
+  CategorySVG,
+} from "@/assets/images/icons";
 import {
   ImageBackground,
   View,
@@ -15,15 +14,17 @@ import {
   TouchableOpacity,
   Image,
   ImageProps,
-  StatusBar,
-  Platform,
 } from "react-native";
-import CategorySVG from "@/assets/images/icons/categorySVG";
+
+import React, { useCallback } from "react";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
+import { useHeaderStore } from "@/store/headerStore";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import ExpandableText from "@/components/ExpandableText";
 import EventSlider from "@/components/EventSlider";
 import { imageSlider } from "@/assets/data/eventData";
-import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
-import { useHeaderStore } from "@/store/headerStore";
+import { placeList } from "@/assets/data/placeData";
 
 interface Props {
   image: ImageProps;
@@ -103,7 +104,10 @@ const Author = ({ name, isSubscribed = false, image, type }: Props) => {
 const Event = () => {
   const { id } = useLocalSearchParams();
   const event = imageSlider.find((item) => item.id === Number(id));
+  const place = placeList.find((p) => p.id === event?.placeId);
   const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const statusBarHeight = insets.top;
 
   const setHeader = useHeaderStore((state) => state.setHeader);
 
@@ -124,14 +128,33 @@ const Event = () => {
     router.back();
   };
 
+  const handlePress = () => {
+    router.push({
+      pathname: "/place/[id]",
+      params: {
+        id: Number(place?.id),
+        title: place?.title,
+        shortDescription: place?.shortDescription,
+        description: place?.description,
+      },
+    });
+  };
+
   return (
     <ScrollView style={style.container}>
       <View style={style.header}>
         <ImageBackground
-          source={headerBackground}
+          source={require("@/assets/images/placeholder.png")}
           style={style.backgroundImage}
         >
-          <View style={style.topButtonsContainer}>
+          <View style={style.overlay} />
+          <View
+            style={[
+              style.topButtonsContainer,
+              ,
+              { marginTop: statusBarHeight },
+            ]}
+          >
             <View>
               <TouchableOpacity
                 onPress={goBack}
@@ -186,18 +209,34 @@ const Event = () => {
         </View>
         <ExpandableText>{event?.description ?? ""}</ExpandableText>
       </View>
-      <View style={style.shop}>
-        <Text style={style.shop_text}>Магазин винтажной одежды “Гречка”</Text>
-        <Image source={Shop} style={style.shop_image}></Image>
-      </View>
+
+      <TouchableOpacity activeOpacity={0.5} onPress={handlePress}>
+        <View style={style.shop}>
+          <Text style={style.shop_text}>Магазин винтажной одежды “Гречка”</Text>
+          <Image
+            source={require("@/assets/images/sliderImages/4.jpg")}
+            style={style.shop_image}
+          ></Image>
+        </View>
+      </TouchableOpacity>
       <View style={style.authors}>
         <Text style={style.authors_text}>Авторы мероприятия</Text>
-        <Author image={Avatar} name={"Имя автора"} type={"Исполнитель"} />
-        <Author image={Avatar} name={"Имя автора"} type={"Исполнитель"} />
+        <Author
+          image={require("@/assets/images/avatar.png")}
+          name={"Имя автора"}
+          type={"Исполнитель"}
+        />
+        <Author
+          image={require("@/assets/images/avatar.png")}
+          name={"Имя автора"}
+          type={"Исполнитель"}
+        />
       </View>
-      <View style={style.similar}>
-        <Text style={style.similar_text}>Похоже на это</Text>
-        <View style={{ flex: 1, paddingBottom: 72, paddingHorizontal: 18 }}>
+      <View>
+        <View style={style.similar}>
+          <Text style={style.similar_text}>Похоже на это</Text>
+        </View>
+        <View style={{ marginTop: 8, paddingBottom: 24 }}>
           <EventSlider
             itemList={imageSlider.filter((item) => item.id !== Number(id))}
           />
@@ -212,7 +251,6 @@ const style = StyleSheet.create({
     flexDirection: "column",
     width: "100%",
     backgroundColor: "#fff",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   header: {
     flexDirection: "row",
@@ -224,6 +262,11 @@ const style = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 32,
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject, // растянуть на весь родительский блок
+    backgroundColor: "rgba(0, 0, 0, 0.6)", // полупрозрачный черный
+    zIndex: 1,
+  },
   circleButtons: {
     width: 48,
     height: 48,
@@ -231,6 +274,7 @@ const style = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, .25)",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 2,
   },
   svg: {
     width: 24,
@@ -253,6 +297,7 @@ const style = StyleSheet.create({
     alignItems: "flex-start",
     gap: 8,
     paddingHorizontal: 23,
+    zIndex: 2,
   },
   title: {
     fontSize: 32,
@@ -279,6 +324,7 @@ const style = StyleSheet.create({
     backgroundColor: "#000",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 2,
   },
   main_container: {
     flexDirection: "column",

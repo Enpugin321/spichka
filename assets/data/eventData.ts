@@ -8,6 +8,7 @@ export type EventSliderType = {
   shortDescription: string;
   description: string;
   price: number;
+  placeId: number;
 };
 
 export const imageSlider: EventSliderType[] = [
@@ -21,6 +22,7 @@ export const imageSlider: EventSliderType[] = [
     description:
       "На фестивале уличной еды вас ждёт более 50 гастрономических точек, живые выступления музыкантов, кулинарные мастер-классы и зона с лаунж-отдыхом. Приходите всей семьёй!",
     price: 1000,
+    placeId: 1,
   },
   {
     id: 2,
@@ -32,6 +34,7 @@ export const imageSlider: EventSliderType[] = [
     description:
       "На маркете вы найдёте украшения, керамику, постеры, винтажные вещи и необычные аксессуары от локальных мастеров. А также — кофейные точки, живая музыка и фотозоны.",
     price: 3000,
+    placeId: 2,
   },
   {
     id: 3,
@@ -43,6 +46,7 @@ export const imageSlider: EventSliderType[] = [
     description:
       "Один раз в год музеи города работают всю ночь! Программа включает световые шоу, тематические экскурсии, лекции и перформансы. Успейте забронировать вход!",
     price: 2000,
+    placeId: 3,
   },
   {
     id: 4,
@@ -54,5 +58,6 @@ export const imageSlider: EventSliderType[] = [
     description:
       "Современное и классическое кино, пледы, попкорн и уютная атмосфера — всё это в летнем кинотеатре. Вход свободный, количество мест ограничено.",
     price: 2000,
+    placeId: 4,
   },
 ];

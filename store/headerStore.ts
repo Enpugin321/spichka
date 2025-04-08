@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 interface HeaderState {
   visible: boolean;
+  title: string;
   showBack: boolean;
   showAvatar: boolean;
   showProfileBar: boolean;
@@ -12,6 +13,7 @@ interface HeaderState {
 
 export const useHeaderStore = create<HeaderState>((set) => ({
   visible: true,
+  title: "",
   showBack: false,
   showAvatar: true,
   showProfileBar: false,

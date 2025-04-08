@@ -6,16 +6,18 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
-import { EventSliderType } from "@/assets/data/eventData";
-import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
 import Animated, {
   Extrapolation,
   interpolate,
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
+
+import React from "react";
+import { useRouter } from "expo-router";
+
+import { EventSliderType } from "@/assets/data/eventData";
+import { LinearGradient } from "expo-linear-gradient";
 
 type Props = {
   item: EventSliderType;
@@ -25,10 +27,23 @@ type Props = {
 
 const { width } = Dimensions.get("screen");
 const ITEM_WIDTH = width * 0.75;
+const ITEM_MARGIN = 20;
+const ITEM_SPACING = ITEM_MARGIN * 2;
+const SNAP_INTERVAL = ITEM_WIDTH + ITEM_SPACING;
 
 const SliderItem = ({ item, index, scrollX }: Props) => {
   const router = useRouter();
+
   const rnAnimatedStyle = useAnimatedStyle(() => {
+    const activeIndex = Math.round(scrollX.value / SNAP_INTERVAL);
+
+    let shiftX = 0;
+    if (activeIndex === 0) {
+      shiftX = -64;
+    } else {
+      shiftX = 0;
+    }
+
     return {
       transform: [
         {
@@ -39,7 +54,7 @@ const SliderItem = ({ item, index, scrollX }: Props) => {
               index * ITEM_WIDTH,
               (index + 1) * ITEM_WIDTH,
             ],
-            [-ITEM_WIDTH * 0.25, 0, ITEM_WIDTH * 0.25],
+            [-ITEM_WIDTH * 0.25 + shiftX, shiftX, ITEM_WIDTH * 0.25 + shiftX],
             Extrapolation.CLAMP
           ),
         },

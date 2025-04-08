@@ -1,4 +1,4 @@
-import { View, FlatList, Text } from "react-native";
+import { View, Dimensions } from "react-native";
 import React from "react";
 
 import { EventSliderType } from "@/assets/data/eventData";
@@ -12,6 +12,12 @@ type Props = {
   itemList: EventSliderType[];
 };
 
+const { width } = Dimensions.get("screen");
+const ITEM_WIDTH = width * 0.75;
+const ITEM_MARGIN = 20;
+const ITEM_SPACING = ITEM_MARGIN * 2;
+const SNAP_INTERVAL = ITEM_WIDTH + ITEM_SPACING;
+
 const EventSlider = ({ itemList }: Props) => {
   const scrollX = useSharedValue(0);
 
@@ -22,7 +28,7 @@ const EventSlider = ({ itemList }: Props) => {
   });
 
   return (
-    <View style={{ flexShrink: 1, marginHorizontal: -48 }}>
+    <View style={{ flexShrink: 1 }}>
       <Animated.FlatList
         data={itemList}
         renderItem={({ item, index }) => (
@@ -30,9 +36,15 @@ const EventSlider = ({ itemList }: Props) => {
         )}
         horizontal
         showsHorizontalScrollIndicator={false}
-        snapToAlignment="center"
-        pagingEnabled
+        decelerationRate="fast"
+        snapToInterval={SNAP_INTERVAL}
+        bounces={false}
         onScroll={onScrollHandler}
+        scrollEventThrottle={16}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={{
+          paddingHorizontal: (width - ITEM_WIDTH) / 2 - ITEM_MARGIN,
+        }}
       />
     </View>
   );

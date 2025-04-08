@@ -21,8 +21,8 @@ const SwiperComponent = () => {
   return (
     <View style={styles.container}>
       <Swiper
-        dotColor="#ffffff"
-        activeDotColor="#7c7c7c"
+        dotColor="#00000033"
+        activeDotColor="#000000"
         showsPagination={true}
       >
         {images?.map((image) => (
@@ -43,7 +43,7 @@ export default SwiperComponent;
 
 const styles = StyleSheet.create({
   container: {
-    height: 227,
+    height: 180,
     borderRadius: 24,
     overflow: "hidden",
   },

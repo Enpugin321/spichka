@@ -1,8 +1,9 @@
 import { useHeaderStore } from "@/store/headerStore";
 import { useFocusEffect } from "@react-navigation/native"; // Вызывается каждый раз, когда экран становится активным
 import { useCallback } from "react";
+import { useRouter } from "expo-router";
 
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 
 import { ArrowRight } from "@/components/ui/ArrowRight";
 import SwiperComponent from "@/components/SwiperComponent";
@@ -16,6 +17,7 @@ import CollectionComponent from "@/components/CollectionComponent";
 
 export default function HomeScreen() {
   const setHeader = useHeaderStore((state) => state.setHeader);
+  const router = useRouter();
 
   useFocusEffect(
     useCallback(() => {
@@ -35,10 +37,17 @@ export default function HomeScreen() {
         <SwiperComponent />
       </View>
 
-      <View style={styles.blockContainer}>
-        <View style={styles.titleContainer}>
-          <ThemedText type="title">На повестке дня</ThemedText>
-          <ArrowRight />
+      <View>
+        <View style={styles.blockContainer}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => router.push("/(tabs)/events")}
+          >
+            <View style={styles.titleContainer}>
+              <ThemedText type="title">На повестке дня</ThemedText>
+              <ArrowRight />
+            </View>
+          </TouchableOpacity>
         </View>
         <View>
           <EventSlider itemList={imageSlider} />
@@ -46,11 +55,16 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.blockContainer}>
-        <View style={styles.titleContainer}>
-          <ThemedText type="title">Подборки редакции</ThemedText>
-          <ArrowRight />
-        </View>
-        <CollectionComponent itemList={collectionData} />
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => router.push("/(tabs)/collections")}
+        >
+          <View style={styles.titleContainer}>
+            <ThemedText type="title">Подборки редакции</ThemedText>
+            <ArrowRight />
+          </View>
+        </TouchableOpacity>
+        <CollectionComponent itemList={collectionData.slice(0, 4)} />
       </View>
     </ScrollView>
   );
